@@ -1,14 +1,26 @@
 var dataset = require('./dataset.json');
 
+const bankBalanceData = dataset.bankBalances;
+// console.log(bankBalanceData);
+
 /*
   create an array with accounts from bankBalances that are
   greater than 100000
   assign the resulting new array to `hundredThousandairs`
 */
 var hundredThousandairs = null;
+const filterBalance = (arr, num) => {
+  return arr.filter(x => x.amount > num);
+};
+hundredThousandairs = filterBalance(bankBalanceData, 100000);
 
 // set sumOfBankBalances to be the sum of all value held at `amount` for each bank object
 var sumOfBankBalances = null;
+const sumBalance = (arr) => {
+  return arr.map(x => parseInt(x.amount)).reduce((accum, currVal) => (accum + currVal))
+};
+
+sumOfBankBalances = sumBalance(bankBalanceData);
 
 /*
   from each of the following states:
@@ -22,6 +34,17 @@ var sumOfBankBalances = null;
   and then sum it all up into one value saved to `sumOfInterests`
  */
 var sumOfInterests = null;
+const stateList = ['WI', 'IL', 'WY', 'OH', 'GA', 'DE'];
+
+const newStateArr = (arr1, arr2) => {
+  return arr1.filter(x => arr2.includes(x.state));
+};
+
+const getInterest = (arr, num) =>{
+  return arr.map(x => Math.round(x.amount * num));
+}
+
+sumOfInterests = Math.floor(getInterest(newStateArr(bankBalanceData, stateList), .189).reduce((accum, currVal) => accum + currVal));
 
 /*
   aggregate the sum of bankBalance amounts
