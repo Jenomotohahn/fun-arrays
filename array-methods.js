@@ -64,6 +64,20 @@ sumOfInterests = Math.floor(getInterest(newStateArr(bankBalanceData, stateList),
  */
 var stateSums = null;
 
+const hashTable = (arr) =>{
+  let newObj = {};
+  arr.forEach(x => {
+    if(newObj.hasOwnProperty(x.state)){
+      newObj[x.state] += Math.round(parseInt(x.amount));
+    }else{
+      newObj[x.state] = parseInt(x.amount);
+    }
+  });
+    return newObj;
+};
+
+stateSums = hashTable(bankBalanceData);
+
 /*
   for all states *NOT* in the following states:
     Wisconsin
