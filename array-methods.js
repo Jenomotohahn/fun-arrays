@@ -113,7 +113,6 @@ bankBalanceData.forEach(x => {
 });
 
 let newArr = Object.values(newObj);
-console.log(newArr);
 sumOfHighInterests = newArr.map(x => Math.round(parseInt(x, 10) * .189)).filter(x => x > 50000).reduce((accum, currVal) => (accum + currVal));
 
 
@@ -124,12 +123,29 @@ sumOfHighInterests = newArr.map(x => Math.round(parseInt(x, 10) * .189)).filter(
   in the state is less than 1,000,000
  */
 var lowerSumStates = null;
+const newLowerSSHash = hashTable(bankBalanceData);
+const newLowerSumArr = Object.entries(newLowerSSHash);
+lowerSumStates = newLowerSumArr.filter(x => x[1] < 1000000)
+              .map(x => x[0]);
+
+
+// Object.entries(newLowerSSHash).forEach(x => {
+//   if(x[1] > 1000000){
+//     newLowerSumArr.push(x[2]);
+//   }
+// })
+// console.log(newLowerSumArr)
+// lowerSumStates = newLowerSumArr;
+
 
 /*
   aggregate the sum of each state into one hash table
   `higherStateSums` should be the sum of all states with totals greater than 1,000,000
  */
 var higherStateSums = null;
+const newHighHash = hashTable(bankBalanceData)
+higherStateSums = Object.entries(newHighHash).filter(x => x[1] > 1000000).map(x => x[1]).reduce((accum, currVal) => (accum + currVal));
+
 
 /*
   from each of the following states:
@@ -147,6 +163,16 @@ var higherStateSums = null;
   otherwise set it to `false`
  */
 var areStatesInHigherStateSum = null;
+const newStatesHighSum = hashTable(bankBalanceData);
+stateArr.forEach(x => {
+  if (newStatesHighSum[x] > 2550000){
+    areStatesInHigherStateSum = true;
+  }else{
+    areStatesInHigherStateSum = false;
+    return;
+  };
+});
+
 
 /*
   Stretch Goal && Final Boss
@@ -163,6 +189,14 @@ var areStatesInHigherStateSum = null;
   otherwise set it to be `false`
  */
 var anyStatesInHigherStateSum = null;
+const newAnyState = hashTable(bankBalanceData);
+const setAnyState = Object.entries(newAnyState).filter(x => stateArr.includes(x[0]) && x[1] > 2550000);
+
+if(setAnyState){
+  anyStatesInHigherStateSum = true;
+}else{
+  anyStatesInHigherStateSum = false;
+};
 
 
 module.exports = {
