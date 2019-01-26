@@ -1,3 +1,5 @@
+
+
 var dataset = require('./dataset.json');
 
 const bankBalanceData = dataset.bankBalances;
@@ -44,7 +46,7 @@ const getInterest = (arr, num) =>{
   return arr.map(x => Math.round(x.amount * num));
 }
 
-sumOfInterests = Math.floor(getInterest(newStateArr(bankBalanceData, stateList), .189).reduce((accum, currVal) => accum + currVal));
+sumOfInterests = Math.round(getInterest(newStateArr(bankBalanceData, stateList), .189).reduce((accum, currVal) => accum + currVal));
 
 /*
   aggregate the sum of bankBalance amounts
@@ -96,6 +98,25 @@ stateSums = hashTable(bankBalanceData);
   )
  */
 var sumOfHighInterests = null;
+const stateArr = ['WI', 'IL', 'WY', 'OH', 'GA', 'DE'];
+
+let newObj = {};
+
+bankBalanceData.forEach(x => {
+  if(!stateArr.includes(x.state)){
+    if(newObj.hasOwnProperty(x.state)){
+    newObj[x.state] += Math.round(parseInt(x.amount, 10));
+    }else{
+      newObj[x.state] = parseInt(x.amount, 10);
+    }
+  }
+});
+
+let newArr = Object.values(newObj);
+console.log(newArr);
+sumOfHighInterests = newArr.map(x => Math.round(parseInt(x, 10) * .189)).filter(x => x > 50000).reduce((accum, currVal) => (accum + currVal));
+
+
 
 /*
   set `lowerSumStates` to be an array of two letter state
