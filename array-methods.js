@@ -1,11 +1,18 @@
 var dataset = require('./dataset.json');
 
+const bankBalanceData = dataset.bankBalances;
 /*
   create an array with accounts from bankBalances that are
   greater than 100000
   assign the resulting new array to `hundredThousandairs`
 */
 var hundredThousandairs = null;
+
+const filterBalance = (arr, num) => {
+  return arr.filter(x => {x.amount > num});
+};
+
+console.log(filterBalance(bankBalanceData, 100000))
 
 // set sumOfBankBalances to be the sum of all value held at `amount` for each bank object
 var sumOfBankBalances = null;
